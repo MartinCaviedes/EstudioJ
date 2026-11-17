@@ -106,13 +106,13 @@ class SistemaUrbanPark(
 
     fun estadoDeEspacio(numero: Int): EstadoEspacio = buscarEspacio(numero).estado
     fun ticketsDelTurno(): List<Ticket> = historial.toList()
-    fun espaciosDisponibles(): Int = espacios.count { estaLibre(it) }
+    fun espaciosDisponibles(): Int = espacios.count { it.estado !is EstadoEspacio.Ocupado }
     fun vehiculosAbonados(): List<Vehiculo> = historial
-        .filter { it.vehiculo.tipoCliente == TipoCliente.ABONADO }
+        .filter { it.vehiculo.tipoCliente == TipoCliente.REGULAR }
         .map { it.vehiculo }
     fun ingresoPromedio(): Double = if (historial.isEmpty()) 0.0 else historial.map { it.total }.average()
     fun patentesQueHanSalido(): List<String> = historial.map { it.vehiculo.patente }
-    fun vehiculoMasTiempo(): Ticket? = historial.maxByOrNull { it.minutos }
+    fun vehiculoMasTiempo(): Ticket? = historial.maxByOrNull { it.total }
     fun totalRecaudado(): Double = historial.sumOf { it.total }
 
     fun recaudacionPorTipo(): Map<String, Double> {

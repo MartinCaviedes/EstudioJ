@@ -48,7 +48,7 @@ class Particular(patente: String, marca: String, tipoCliente: TipoCliente) :
     override val tipoVehiculo = "Particular"
 
     override fun calcularTarifaBase(minutos: Int): Double {
-        var subtotal = 1500.0 * minutos / 60.0
+        var subtotal = 1500.0 * (minutos / 60)
         if (tipoCliente == TipoCliente.ABONADO) subtotal *= 0.80
         return subtotal
     }
@@ -59,7 +59,7 @@ class Moto(patente: String, marca: String, tipoCliente: TipoCliente) :
     override val tipoVehiculo = "Moto"
 
     override fun calcularTarifaBase(minutos: Int): Double {
-        return if (minutos < 30) 0.0 else 800.0 * minutos / 60.0
+        return if (minutos <= 30) 0.0 else 800.0 * minutos / 60.0
     }
 }
 
@@ -73,7 +73,7 @@ class Camioneta(
 
     override fun calcularTarifaBase(minutos: Int): Double {
         val subtotal = 2500.0 * minutos / 60.0
-        return if (cargaPesada) subtotal * 1.30 else subtotal
+        return if (cargaPesada) subtotal * 1.03 else subtotal
     }
 
     override fun detalle(): String {

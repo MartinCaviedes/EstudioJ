@@ -38,6 +38,13 @@ tasks.register<JavaExec>("verificar") {
     mainClass.set("org.example.VerificacionKt")
 }
 
+// Ejecuta todos los escenarios aunque alguno falle, para guiar la práctica.
+tasks.register<JavaExec>("diagnosticar") {
+    dependsOn("testClasses")
+    classpath = sourceSets["test"].runtimeClasspath
+    mainClass.set("org.example.DiagnosticoPracticaKt")
+}
+
 tasks.named("check") {
     dependsOn("verificar")
 }

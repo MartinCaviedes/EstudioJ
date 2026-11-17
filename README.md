@@ -1,59 +1,52 @@
-# UrbanPark: solución de estudio en Kotlin
+# UrbanPark: práctica de corrección de errores
 
-Aplicación de consola basada en los archivos de `Caso a resolver` y en los ejemplos de `Ejemplos`. La solución conserva el nivel de las guías: clases, herencia, `override`, `sealed class`, listas, funciones de orden superior, excepciones y corrutinas. La demostración utiliza datos predefinidos, como el ejemplo del compañero; el enunciado no exige un menú interactivo.
+Esta rama contiene **seis defectos intencionales** de programación y lógica. El proyecto compila y se puede ejecutar, pero algunos cobros y consultas son incorrectos.
 
-## Abrir y ejecutar
+| Versión | Rama | Uso |
+| --- | --- | --- |
+| Solución de referencia | [main](https://github.com/MartinCaviedes/EstudioJ/tree/main) | Consultar la implementación correcta y su guía. |
+| Ejercicio con defectos | [practica-errores](https://github.com/MartinCaviedes/EstudioJ/tree/practica-errores) | Encontrar, explicar y corregir errores. |
 
-1. Abrir **esta carpeta UrbanPark** como proyecto en IntelliJ IDEA.
-2. Seleccionar **JDK 21** como SDK del proyecto y JVM de Gradle.
-3. Esperar la sincronización de Gradle. La primera vez puede necesitar internet para descargar las dependencias.
-4. Ejecutar `main()` de `src/main/kotlin/Main.kt`, o la tarea Gradle `run`.
+La copia local de esta práctica está en una carpeta distinta de la solución original. Los cambios de esta rama no alteran `main`.
 
-Desde PowerShell, ubicado en esta carpeta:
+## Empezar sin ver las respuestas
+
+1. Abre esta carpeta en IntelliJ con **JDK 21** y espera la sincronización de Gradle.
+2. Ejecuta `Main.kt` o `./gradlew.bat run`. Anota los resultados que no coincidan con el caso.
+3. Ejecuta `./gradlew.bat diagnosticar`: muestra todos los escenarios, aunque algunos fallen.
+4. Corrige el código de `src/main/kotlin`, un problema a la vez. No cambies los valores esperados de las verificaciones.
+5. Repite `diagnosticar` hasta obtener **8 escenarios correctos y 0 pendientes**.
+6. Ejecuta `./gradlew.bat check`: deben pasar las **64 comprobaciones originales**.
+
+En PowerShell:
 
 ```powershell
 .\gradlew.bat run
-.\gradlew.bat verificar
+.\gradlew.bat diagnosticar
 .\gradlew.bat check
 ```
 
-`run` muestra las operaciones, los errores controlados y el reporte. `verificar` ejecuta comprobaciones que fallan si una regla no se cumple. `check` incluye esas verificaciones. No hace falta instalar Kotlin o Gradle por separado: se incluye el wrapper de Gradle.
+**Es normal que `diagnosticar` y `check` terminen con error al comenzar.** La compilación debe funcionar; el fallo procede de las comprobaciones que detectan los defectos. Una corrección completa debe hacer que ambas tareas finalicen correctamente.
 
-Las comprobaciones son un programa con `check`, no pruebas JUnit; por eso la tarea estándar `test` está deshabilitada. Para validarlas se utiliza `verificar` o `check`.
+Las verificaciones originales no se han alterado. Se añadió un diagnóstico que ejecuta seis escenarios independientes y dos controles del comportamiento que debe conservarse.
 
-Versiones declaradas: Kotlin 2.2.10, kotlinx-coroutines-core 1.10.2, Gradle 9.6.0 y JDK 21. Se eligieron Kotlin y corrutinas disponibles en el entorno; Kotlin cumple el mínimo 1.9 del caso. El wrapper proviene del ejemplo adjunto.
+## Ayudas opcionales
 
-## Archivos
+- [Cuaderno de práctica](practica/CUADERNO.md): procedimiento y registro de hallazgos sin revelar las correcciones.
+- [Pistas graduadas](practica/PISTAS.md): consulta solo cuando te atasques.
+- [Soluciones y explicación](practica/SOLUCIONES.md): contiene las respuestas; déjalo para el final.
+- [Estado de verificación de esta rama](VERIFICACION.md).
 
-| Archivo | Responsabilidad |
-| --- | --- |
-| `src/main/kotlin/Vehiculos.kt` | Datos comunes, validación de patente y tarifas de cada subtipo. |
-| `src/main/kotlin/EstadosYTicket.kt` | Cuatro estados, espacio y comprobante de salida. |
-| `src/main/kotlin/SistemaUrbanPark.kt` | Reservas, entradas/salidas, historial, consultas y reporte. |
-| `src/main/kotlin/Consola.kt` | Formato de montos, conversión de cliente y mensajes de errores. |
-| `src/main/kotlin/Main.kt` | Escenario demostrativo con los datos sugeridos y corrutinas hijas. |
-| `src/test/kotlin/Verificacion.kt` | Reglas y casos límite reproducibles sin framework adicional. |
-| `GUIA_DE_ESTUDIO.md` | Análisis, decisiones, fórmulas, pauta y ejercicios para practicar. |
+`GUIA_DE_ESTUDIO.md` pertenece a la solución de referencia y conserva explicaciones y resultados correctos. Puedes usarla al finalizar; leerla antes puede revelar pistas. Los resultados que describe son el objetivo, no los resultados actuales de esta rama.
 
-## Resultado esperado de los cinco datos sugeridos
+## Dificultad y nota orientativa
 
-| Patente | Minutos | Monto |
-| --- | ---: | ---: |
-| AB12CD | 75 | $1.785,00 |
-| XY99ZA | 180 | $5.355,00 |
-| MO22TO | 25 | $0,00 |
-| CA44RG | 120 | $3.867,50 |
-| CA77RG | 45 | $2.231,25 |
+El objetivo es una práctica de nivel intermedio, orientada a una solución parcialmente correcta del rango solicitado **5,0–5,5**. Se conservan estructura, herencia, corrutinas y manejo de errores; se deterioran cálculos, condiciones y consultas de negocio.
 
-Total **$13.238,75**, promedio **$2.647,75**, cinco vehículos atendidos y diez espacios disponibles después de rehabilitar el espacio 10. Particulares: $7.140,00; camionetas: $6.098,75; motos: $0,00. Mayor permanencia: XY99ZA, 180 minutos. Mayor recaudación por tipo: Particular. Abonados del historial: AB12CD.
+**No es posible asegurar ese rango como nota real.** La pauta evalúa niveles por indicador y no asigna una rebaja fija por cada bug. El profesor puede valorar de otra forma el impacto de cada defecto y no se adjuntó una fórmula de conversión de porcentaje a nota. La comprobación objetiva aquí es que existen seis fallos reproducibles, no una calificación certificada.
 
-Los tickets se numeran en el orden en que se completan las salidas; con concurrencia, no conviene depender de una patente fija para cada número. La demostración de capacidad usa otro sistema para conservar intacto el reporte anterior.
+No se introdujeron errores de sintaxis: el caso indica que una solución que no compile no permite evidenciar los indicadores, lo que haría poco útil intentar ajustar una nota intermedia.
 
-## Decisiones del enunciado
+## Tecnologías
 
-- La moto con tiempo positivo menor de 30 minutos puede pagar cero. Es la excepción de R1 y de los datos sugeridos a la prohibición general de R3. Se rechaza cero para los demás casos.
-- El 20% de abonado se aplica a particulares, siguiendo la regla específica R1. El glosario lo presenta de forma general: esta ambigüedad se explica en la guía.
-- Se cobra proporcionalmente por minuto: no se redondea a una hora completa. Se conservan decimales y solo se formatea la salida; el caso no fija una regla de redondeo a pesos enteros.
-- Las corrutinas comparten el hilo de `runBlocking`. Este ejercicio no implementa acceso desde varios hilos; no se deben agregar `Dispatchers.Default` o `Dispatchers.IO` a las operaciones sobre el mismo sistema sin sincronización adicional.
-
-Consulta `GUIA_DE_ESTUDIO.md` para entender las decisiones y reconstruir el ejercicio por etapas.
+Kotlin 2.2.10, kotlinx-coroutines-core 1.10.2, Gradle 9.6.0 y JDK 21. La primera sincronización puede requerir internet. La tarea `test` está deshabilitada porque las comprobaciones son programas ejecutables, no casos JUnit; utiliza `diagnosticar`, `verificar` o `check`.

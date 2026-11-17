@@ -1,26 +1,40 @@
-# Resultado de validación
+# Validación de la rama de práctica
 
-Validación realizada el 17 de noviembre de 2026 en Windows, con JDK 21.
+Fecha: 17 de noviembre de 2026. Entorno: Windows, JDK 21, Gradle 9.6.0 y Kotlin 2.2.10.
 
-Comando ejecutado desde la carpeta del proyecto:
+## Estado inicial: defectos conservados
+
+Se ejecutó:
 
 ```powershell
-.\gradlew.bat --no-daemon check run --console=plain
+.\gradlew.bat --no-daemon classes run diagnosticar --console=plain
 ```
 
-Resultado: **BUILD SUCCESSFUL**. Kotlin compiló los archivos principales y los de verificación. La tarea `verificar`, incluida en `check`, terminó con **64 comprobaciones superadas**. La tarea `test` se omite intencionalmente porque las comprobaciones son un programa ejecutable y no casos JUnit.
+Resultados observados:
 
-La demostración `run` confirmó:
+- Los archivos principales y de diagnóstico compilan.
+- `run` termina la demostración, incluido el control de errores y capacidad.
+- `diagnosticar` ejecuta todos los escenarios y termina con **2 correctos y 6 pendientes**.
+- La salida no exitosa de Gradle corresponde al diagnóstico que detecta los seis defectos; no a una falla de compilación.
+- Las 64 comprobaciones originales de `src/test/kotlin/Verificacion.kt` se mantienen sin cambios respecto de `main`.
 
-- Los cinco tickets sugeridos, incluyendo el ticket gratuito de MO22TO.
-- Recaudación total de $13.238,75 y promedio de $2.647,75.
-- Recaudación de $7.140,00 en particulares, $0,00 en motos y $6.098,75 en camionetas.
-- Mayor permanencia: XY99ZA con 180 minutos.
-- Diez espacios disponibles tras las cinco salidas y la rehabilitación del espacio 10.
-- Consulta de estados Procesando durante las esperas del sensor.
-- Mensajes controlados por patente inválida, cliente inválido, vehículo inexistente, tiempo inválido y estacionamiento sin capacidad.
-- Continuidad hasta el mensaje final de la demostración.
+El total mostrado por esta rama en los cinco datos sugeridos es incorrecto por diseño. Usa los requisitos y las verificaciones como referencia; no adaptes los valores esperados a ese total.
 
-Se compiló y ejecutó mediante Gradle en la terminal. No se realizó una prueba manual de la interfaz de IntelliJ IDEA. El proyecto incluye los archivos de Gradle necesarios para importarlo y ejecutarlo allí.
+## Control de las soluciones
 
-La primera prueba sin conexión no pudo resolver el plugin con la caché disponible. La validación final utilizó resolución normal de dependencias. Una máquina nueva necesita JDK 21 e internet para la primera sincronización.
+Se preparó una copia temporal fuera de esta rama y se repusieron únicamente las seis líneas de producción que difieren de la solución de referencia. Los diagnósticos y verificaciones se mantuvieron iguales.
+
+Se ejecutó en esa copia:
+
+```powershell
+.\gradlew.bat --no-daemon diagnosticar check --console=plain
+```
+
+Resultado: **BUILD SUCCESSFUL**.
+
+```text
+Diagnóstico: 8 escenarios correctos; 0 pendientes.
+VERIFICACIÓN CORRECTA: 64 comprobaciones superadas.
+```
+
+La copia de práctica que se publica conserva los seis defectos. La solución correcta continúa disponible en `main`. La validación comprueba el comportamiento del ejercicio y su reparación; no certifica una nota académica determinada.
